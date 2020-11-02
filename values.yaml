@@ -109,6 +109,8 @@ extraEnv: |
     value: "admin"
   - name: KEYCLOAK_PASSWORD
     value: "admin1234"
+  - name: PROXY_ADDRESS_FORWARDING
+    value: "true"
   # - name: KEYCLOAK_LOGLEVEL
   #   value: DEBUG
   # - name: WILDFLY_LOGLEVEL
@@ -256,22 +258,31 @@ ingress:
   # The Service port targeted by the Ingress
   servicePort: http
   # Ingress annotations
-  annotations: {}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/force-ssl-redirect: "true"
   # Additional Ingress labels
   labels: {}
    # List of rules for the Ingress
   rules:
-    -
+    - 
       # Ingress host
-      host: '{{ .Release.Name }}.keycloak.example.com'
+      host: "keycloak.p-e.kr"
+      # Paths for the host
+      paths:
+        - /
+    - 
+      # Ingress host
+      host: "www.keycloak.p-e.kr"
       # Paths for the host
       paths:
         - /
   # TLS configuration
   tls:
     - hosts:
-        - keycloak.example.com
-      secretName: ""
+        - keycloak.p-e.kr
+        - www.keycloak.p-e.kr
+      secretName: "keycloak-tls"
 
 ## Network policy configuration
 networkPolicy:

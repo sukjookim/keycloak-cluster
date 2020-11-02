@@ -115,7 +115,7 @@ replication:
   synchronousCommit: "off"
   ## From the number of `slaveReplicas` defined above, set the number of those that will have synchronous replication
   ## NOTE: It cannot be > slaveReplicas
-  numSynchronousReplicas: 0
+  numSynchronousReplicas: 1
   ## Replication Cluster application name. Useful for defining multiple replication policies
   applicationName: my_application
 
@@ -314,10 +314,10 @@ persistence:
   ##
   subPath: ""
 
-  # storageClass: "-"
+  storageClass: "sc-retain"
   accessModes:
     - ReadWriteOnce
-  size: 8Gi
+  size: 3Gi
   annotations: {}
 
 ## updateStrategy for PostgreSQL StatefulSet and its slaves StatefulSets
